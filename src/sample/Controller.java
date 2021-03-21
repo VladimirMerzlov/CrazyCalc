@@ -130,10 +130,29 @@ public class Controller {
             }
         });
         comma_btn.setOnAction(event -> {
-            if(!this.strNum.contains(".")){
+            if (!this.strNum.contains(".")) {
                 this.strNum += ".";
                 lable_field.setText(strNum);
             }
+        });
+        plus_minus_btn.setOnAction(event -> {
+            if (this.strNum != "") {
+                float num = Float.parseFloat(this.strNum) * -1;
+                this.strNum = Float.toString(num);
+                lable_field.setText(strNum);
+            }
+        });
+        percent_btn.setOnAction(event -> {
+            if (this.operation == '+' || this.operation == '-' || this.operation == '*'
+                    || this.operation == '/') {
+                percentMethod();
+            }
+        });
+        clear_btn.setOnAction(event -> {
+            lable_field.setText("0");
+            this.strNum = "";
+            this.operation = 'A';
+            this.first_num = 0;
         });
 
 
@@ -180,6 +199,23 @@ public class Controller {
         this.first_num = 0;
         this.operation = 'A';
 
+    }
+
+    void percentMethod() {
+        float res = 0;
+        switch (this.operation) {
+            case '+':
+                res = first_num + first_num * (Float.parseFloat(strNum) / 100);
+                break;
+            case '-':
+                res = first_num - first_num * (Float.parseFloat(strNum) / 100);
+                break;
+
+        }
+        lable_field.setText(Float.toString(res));
+        this.strNum = "";
+        this.first_num = 0;
+        this.operation = 'A';
     }
 
 }
